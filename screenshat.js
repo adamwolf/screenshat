@@ -23,6 +23,18 @@ function intify(value) {
   return parsedValue;
 }
 
+
+function validateHeight(value) {
+  if (value === 'full') {
+    return value;
+  }
+  try {
+    return intify(value);
+  } catch {
+    throw new InvalidArgumentError('Not a number or the word "full".');
+  }
+}
+
 function increaseVerbosity(dummyValue, previous) {
   return previous + 1;
 }
@@ -99,6 +111,7 @@ function consoleprint(msg) {
   console.verbosity = loglevel;
 }
 
+
 (async () => {
   program
     .name('screenshat')
@@ -108,6 +121,7 @@ function consoleprint(msg) {
     .requiredOption('--url <url>', 'URL to screenshot')
     .option('--min-width <pixels>', 'minimum width', intify, 320)
     .option('--max-width <pixels>', 'maximum width', intify, 1920)
+    .option('--max-height <pixels>', 'maximum height in pixels, or "full"', validateHeight, 800)
     .addOption(new Option('--output-dir <dir>', 'output directory').default(null, 'new temp directory'))
     .option('--browser <browser>', 'browser to use with Playwright, like chromium, firefox, or webkit', 'chromium')
     .option('--no-progress', 'disable progress bars')
@@ -126,7 +140,7 @@ function consoleprint(msg) {
   let loglevel = 1; //default to error and other things of that level
 
   if (options.quiet) {
-    loglevel = 1; //errors onlyTOADFKJADSFOJFDAOJADFSJODFASOJDAFSOJADFOJDAFJO
+    loglevel = 1; //errors only
   } else if (options.verbose === 1) {
     loglevel = 3; //log+warn+errors
   } else if (options.verbose === 2) {
@@ -165,6 +179,13 @@ function consoleprint(msg) {
     ).then(
       (directory) => {outputDir = directory}
     );
+  }
+
+  let maxHeight;
+  if (options.maxHeight === 'full') {
+    maxHeight = null;
+  } else {
+    maxHeight = options.maxHeight;
   }
 
   const generateVideo = options.outputMp4 || options.outputWebm || options.outputGif || options.outputPng;
@@ -224,12 +245,17 @@ function consoleprint(msg) {
   }
 
   // The captured full page screenshots include full *width*.
-  // We want full *length*, but if the width is wider than the window, we want to cut it off.
+  // We may want full *length*, but if the width is wider than the window, we want to cut it off.
   // We are able to tell Playwright a clip region.  We can't say "any length", so we set an arbitrary height
   // and if our screenshot is that height, we print a small warning, increase the arbitrary height, and try again.
-
-  let heightLimit = 10000;
   let fpath;
+  let heightLimit;
+  if (maxHeight == null) {
+    heightLimit = 10000;
+  } else {
+    heightLimit = maxHeight;
+  }
+
   for (let width = minWidth; width <= maxWidth; width++) {
     console.debug(`Taking screenshot of ${options.url} at ${width} pixels wide`)
     // Note: this height doesn't matter too much,
@@ -241,7 +267,7 @@ function consoleprint(msg) {
 
     await page.screenshot({path: fpath, fullPage: true, clip: {x: 0, y: 0, width: width, height: heightLimit}});
     let dimensions = await sizeOf(fpath);
-    while (dimensions.height >= heightLimit) {
+    while (maxHeight == null && dimensions.height >= heightLimit) {
       console.warn(`Height limit (${heightLimit} reached, increasing.`);
       heightLimit = dimensions.height + 1000;
       await page.screenshot({path: fpath, fullPage: true, clip: {x: 0, y: 0, width: width, height: heightLimit}});
@@ -277,6 +303,7 @@ function consoleprint(msg) {
       outputDir: outputDir,
       minWidth: minWidth,
       maxWidth: maxWidth,
+      maxHeight: maxHeight,
       tallestScreenshotHeight: tallestScreenshotHeight,
       widestScreenshotWidth: widestScreenshotWidth,
       numDigits: numWidthDigits,
