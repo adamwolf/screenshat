@@ -4,7 +4,7 @@ Take screenshots and videos of a website at different widths
 
 I wanted to be able to review how a page worked across a full span of sizes--not just at a few fixed sizes.  I was already creating screenshots with Playwright.  I tried making videos directly with Playwright, but they weren't quite how I wanted them.  `screenshat` was born.
 
-This project works fine for me, but it currently makes absolutely no guarantees about behavior (between releases, or otherwise).  Defaults and command-line options are definitely subject to change as we play around with what's best.
+This project works fine for me, but it currently makes absolutely no guarantees about "stability". Defaults and command-line options are definitely subject to change as we play around with what's best.
 
 # Usage
 
@@ -16,20 +16,21 @@ Take screenshots and videos of a website at different widths
 Requires ffmpeg to be installed and in your PATH.
 
 Options:
-  --url <url>           URL to screenshot
-  --min-width <pixels>  minimum width (default: 320)
-  --max-width <pixels>  maximum width (default: 1920)
-  --output-dir <dir>    output directory (default: new temp directory)
-  --browser <browser>   browser to use with Playwright, like chromium, firefox, or webkit (default: "chromium")
-  --no-progress         disable progress bars
-  --json                print details as JSON (it can be helpful to include --quiet)
-  --output-mp4          output mp4 video
-  --output-webm         output webm video
-  --output-gif          output animated gif
-  --output-png          output animated png
-  -q, --quiet           produce minimal command-line output
-  -v, --verbose         produce more command-line output
-  -h, --help            display help for command
+  --url <url>            URL to screenshot
+  --min-width <pixels>   minimum width (default: 320)
+  --max-width <pixels>   maximum width (default: 1920)
+  --max-height <pixels>  maximum height in pixels, or "full" (default: 800)
+  --output-dir <dir>     output directory (default: new temp directory)
+  --browser <browser>    browser to use with Playwright, like chromium, firefox, or webkit (default: "chromium")
+  --no-progress          disable progress bars
+  --json                 print details as JSON (it can be helpful to include --quiet)
+  --output-mp4           output mp4 video
+  --output-webm          output webm video
+  --output-gif           output animated gif
+  --output-png           output animated png
+  -q, --quiet            produce minimal command-line output
+  -v, --verbose          produce more command-line output
+  -h, --help             display help for command
 ```
 
 # Installation
