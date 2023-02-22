@@ -124,7 +124,7 @@ function consoleprint(msg) {
     .option('--max-width <pixels>', 'maximum width', intify, 1920)
     .option('--max-height <pixels>', 'maximum height in pixels, or "full"', validateHeight, 800)
     .addOption(new Option('--output-dir <dir>', 'output directory').default(null, 'new temp directory'))
-    .option('--browser <browser>', 'browser to use with Playwright, like chromium, firefox, or webkit', 'chromium')
+    .option('--browser <browser>', 'Playwright browser, like chromium, firefox, or webkit', 'chromium')
     .option('--no-progress', 'disable progress bars')
     .option('--json', 'print details as JSON (it can be helpful to include --quiet)')
     .option('--output-mp4', 'output mp4 video')

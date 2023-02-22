@@ -6,6 +6,10 @@ I wanted to be able to review how a page worked across a full span of sizes--not
 
 This project works fine for me, but it currently makes absolutely no guarantees about "stability". Defaults and command-line options are definitely subject to change as we play around with what's best.
 
+# Demo
+
+![Terminal output after running screenshat](media/terminal.gif)
+
 # Usage
 
 ```
