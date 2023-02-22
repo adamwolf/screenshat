@@ -14,6 +14,7 @@ import colors from "ansi-colors";
 
 import {createConsole} from 'verbosity';
 
+const version = '1.1.0';
 
 function intify(value) {
   const parsedValue = parseInt(value, 10);
@@ -132,6 +133,7 @@ function consoleprint(msg) {
     .option('--output-png', 'output animated png')
     .option('-q, --quiet', 'produce minimal command-line output')
     .option('-v, --verbose', 'produce more command-line output', increaseVerbosity, 0)
+    .version(version)
     .showHelpAfterError();
   program.parse();
 
