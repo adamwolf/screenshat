@@ -30,6 +30,7 @@ Options:
   --output-png           output animated png
   -q, --quiet            produce minimal command-line output
   -v, --verbose          produce more command-line output
+  -V, --version          output the version number
   -h, --help             display help for command
 ```
 
