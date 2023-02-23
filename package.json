@@ -1,6 +1,6 @@
 {
   "name": "screenshat",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Take screenshots and videos of a website at different widths",
   "type": "module",
   "bin": "./screenshat.js",
