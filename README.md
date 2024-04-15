@@ -32,6 +32,7 @@ Options:
   --output-webm          output webm video
   --output-gif           output animated gif
   --output-png           output animated png
+  --framerate <fps>      set frames per second for output video
   -q, --quiet            produce minimal command-line output
   -v, --verbose          produce more command-line output
   -V, --version          output the version number
