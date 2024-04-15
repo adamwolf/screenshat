@@ -14,7 +14,7 @@ import colors from "ansi-colors";
 
 import {createConsole} from 'verbosity';
 
-const version = '1.1.0';
+const version = '1.2.0';
 
 /*global console*/
 
