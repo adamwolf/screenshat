@@ -42,8 +42,14 @@ function increaseVerbosity(dummyValue, previous) {
   return previous + 1;
 }
 
-function getFfmpegArgs(inputImages, minWidth, maxWidth, videoWidth, videoHeight, videoFiles) {
-  let cmdargs = ['-start_number', minWidth, "-i", inputImages]
+function getFfmpegArgs(inputImages, minWidth, maxWidth, videoWidth, videoHeight, videoFiles, fps) {
+  let cmdargs = [];
+
+  if (fps) {
+    cmdargs = cmdargs.concat(['-framerate', fps]);
+  }
+
+  cmdargs = cmdargs.concat(['-start_number', minWidth, "-i", inputImages]);
 
   // https://ffmpeg.org/ffmpeg-filters.html#pad-1
   // https://ffmpeg.org/ffmpeg-utils.html#color-syntax
@@ -133,6 +139,7 @@ function consoleprint(msg) {
     .option('--output-webm', 'output webm video')
     .option('--output-gif', 'output animated gif')
     .option('--output-png', 'output animated png')
+    .option('--framerate <fps>', 'set frames per second for output video', intify)
     .option('-q, --quiet', 'produce minimal command-line output')
     .option('-v, --verbose', 'produce more command-line output', increaseVerbosity, 0)
     .version(version)
@@ -207,6 +214,12 @@ function consoleprint(msg) {
   }
   if (options.outputPng) {
     videoFiles.png = path.join(outputDir, `${videoBase}.png`);
+  }
+
+  let fps;
+
+  if (options.framerate) {
+    fps = options.framerate;
   }
 
   const minWidth = options.minWidth;
@@ -340,7 +353,7 @@ function consoleprint(msg) {
   }
 
   const inputImages = `${outputDir}/screenshot-${options.browser}-%${numWidthDigits}d.png`
-  let cmdargs = getFfmpegArgs(inputImages, minWidth, maxWidth, videoWidth, videoHeight, videoFiles);
+  let cmdargs = getFfmpegArgs(inputImages, minWidth, maxWidth, videoWidth, videoHeight, videoFiles, fps);
   if (cmdargs === null) {
     console.error("Could not generate ffmpeg arguments");
     process.exit(1);
