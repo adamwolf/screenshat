@@ -16,6 +16,8 @@ import {createConsole} from 'verbosity';
 
 const version = '1.1.0';
 
+/*global console*/
+
 function intify(value) {
   const parsedValue = parseInt(value, 10);
   if (isNaN(parsedValue)) {
