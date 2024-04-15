@@ -25,7 +25,7 @@ Options:
   --max-width <pixels>   maximum width (default: 1920)
   --max-height <pixels>  maximum height in pixels, or "full" (default: 800)
   --output-dir <dir>     output directory (default: new temp directory)
-  --browser <browser>    browser to use with Playwright, like chromium, firefox, or webkit (default: "chromium")
+  --browser <browser>    Playwright browser, like chromium, firefox, or webkit (default: "chromium")
   --no-progress          disable progress bars
   --json                 print details as JSON (it can be helpful to include --quiet)
   --output-mp4           output mp4 video
